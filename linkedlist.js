@@ -60,34 +60,32 @@ let linkedlist_B = {
 
 let linkedlist;
 
-function node(x, placeholder) {
+function loop(x, queue) {
     if (x.child) {
         if (x.next) {
-            if (!placeholder)
-                placeholder = [];
-            placeholder.push(x.next);
-            node(linkedlist[x.child], placeholder);
+            queue.push(x.next);
+            loop(linkedlist[x.child], queue);
         } else {
-            node(linkedlist[x.child], placeholder);
+            loop(linkedlist[x.child], queue);
         }
         x.next = x.child;
         x.child = undefined;
     } else if (x.next) { 
-        node(linkedlist[x.next], placeholder);
+        loop(linkedlist[x.next], queue);
     } else {
-        x.next = placeholder.pop();;
+        x.next = queue.pop();;
        if (x.next)
-           node(linkedlist[x.next], placeholder);
+           loop(linkedlist[x.next], queue);
     }
 }
 
 linkedlist = linkedlist_A;
 console.log('A before', JSON.stringify(linkedlist, null, 4));
-node(linkedlist['1']);
+loop(linkedlist['1'], []);
 console.log('A after', JSON.stringify(linkedlist, null, 4));
 
 linkedlist = linkedlist_B;
 console.log('B before', JSON.stringify(linkedlist, null, 4));
-node(linkedlist['1']);
+loop(linkedlist['1'], []);
 console.log('B after', JSON.stringify(linkedlist, null, 4));
 
