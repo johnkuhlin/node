@@ -1,6 +1,36 @@
 /*
 *
 *  FROM
+*  [1] -> [2] -> [3] -> [8] -> [10]
+*                 |      |
+*                 |     [9]
+*                 |
+*                [4] -> [5] -> [6]
+*                               |
+*                              [7]
+*                            
+*                            
+*  TO                            
+*  [1] -> [2] -> [3] -> [4] -> [5] -> [6] -> [7] -> [8] -> [9] -> [10]
+*
+*/
+
+let linkedlist_A = {
+    '1': { next: '2' },
+    '2': { next: '3' },
+    '3': { next: '8', child: '4' },
+    '4': { next: '5' },
+    '5': { next: '6' },
+    '6': { child: '7' },
+    '7': {},
+    '8': { next: '10', child: '9' },
+    '9': {},
+    '10': {}
+}; 
+
+/*
+*
+*  FROM
 *  [1] -> [2] -> [8] -> [10]
 *          |      |
 *          |     [9]
@@ -15,7 +45,7 @@
 *
 */
 
-let linkedlist = {
+let linkedlist_B = {
     '1': { next: '2' },
     '2': { next: '8', child: '3' },
     '3': { next: '4' },
@@ -27,6 +57,8 @@ let linkedlist = {
     '9': {},
     '10': {}
 }; 
+
+let linkedlist;
 
 function node(x, placeholder) {
     if (x.child) {
@@ -49,7 +81,13 @@ function node(x, placeholder) {
     }
 }
 
-console.log('before', JSON.stringify(linkedlist, null, 4));
+linkedlist = linkedlist_A;
+console.log('A before', JSON.stringify(linkedlist, null, 4));
 node(linkedlist['1']);
-console.log('after', JSON.stringify(linkedlist, null, 4));
+console.log('A after', JSON.stringify(linkedlist, null, 4));
+
+linkedlist = linkedlist_B;
+console.log('B before', JSON.stringify(linkedlist, null, 4));
+node(linkedlist['1']);
+console.log('B after', JSON.stringify(linkedlist, null, 4));
 
