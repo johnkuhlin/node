@@ -1,13 +1,13 @@
 /*
 *
 *  FROM
-*  [1] -> [2] -> [3] -> [8] -> [10]
-*                 |      |
-*                 |     [9]
+*  [1] -> [2] -> [8] -> [10]
+*          |      |
+*          |     [9]
+*          |        
+*         [3] -> [4] -> [7]
 *                 |
-*                [4] -> [5] -> [6]
-*                               |
-*                              [7]
+*                [5] -> [6]
 *                            
 *                            
 *  TO                            
@@ -17,11 +17,11 @@
 
 let linkedlist = {
     '1': { next: '2' },
-    '2': { next: '3' },
-    '3': { next: '8', child: '4' },
-    '4': { next: '5' },
+    '2': { next: '8', child: '3' },
+    '3': { next: '4' },
+    '4': { next: '7', child: '5' },
     '5': { next: '6' },
-    '6': { child: '7' },
+    '6': {},
     '7': {},
     '8': { next: '10', child: '9' },
     '9': {},
@@ -31,7 +31,10 @@ let linkedlist = {
 function node(x, placeholder) {
     if (x.child) {
         if (x.next) {
-            node(linkedlist[x.child], x.next);
+            if (!placeholder)
+                placeholder = [];
+            placeholder.push(x.next);
+            node(linkedlist[x.child], placeholder);
         } else {
             node(linkedlist[x.child], placeholder);
         }
@@ -40,9 +43,9 @@ function node(x, placeholder) {
     } else if (x.next) { 
         node(linkedlist[x.next], placeholder);
     } else {
-        x.next = placeholder;
-       if(x.next)
-           node(linkedlist[x.next]);
+        x.next = placeholder.pop();;
+       if (x.next)
+           node(linkedlist[x.next], placeholder);
     }
 }
 
