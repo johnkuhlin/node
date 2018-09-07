@@ -62,12 +62,9 @@ let linkedlist;
 
 function loop(x, queue) {
     if (x.child) {
-        if (x.next) {
+        if (x.next)
             queue.push(x.next);
-            loop(linkedlist[x.child], queue);
-        } else {
-            loop(linkedlist[x.child], queue);
-        }
+        loop(linkedlist[x.child], queue);
         x.next = x.child;
         x.child = undefined;
     } else if (x.next) { 
